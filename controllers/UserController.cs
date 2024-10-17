@@ -21,8 +21,8 @@ namespace tooms.controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll() {
-            var users = await context.Users.ToListAsync();
+        public IActionResult GetAll() {
+            var users = context.Users.ToList();  // Synchronous method
             var usersDto = users.Select(user => user.ToUserDto());
 
             return Ok(users);
