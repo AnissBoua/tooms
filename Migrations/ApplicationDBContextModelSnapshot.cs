@@ -37,16 +37,11 @@ namespace tooms.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId1")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("FriendId");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("Contacts");
                 });
@@ -167,10 +162,6 @@ namespace tooms.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("tooms.models.User", null)
-                        .WithMany("Contacts")
-                        .HasForeignKey("UserId1");
 
                     b.Navigation("Friend");
 

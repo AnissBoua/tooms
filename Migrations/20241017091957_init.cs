@@ -64,7 +64,6 @@ namespace tooms.Migrations
                     FriendId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    UserId1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -81,11 +80,6 @@ namespace tooms.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Contacts_Users_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "Users",
-                        principalColumn: "Id");
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -155,11 +149,6 @@ namespace tooms.Migrations
                 name: "IX_Contacts_UserId",
                 table: "Contacts",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Contacts_UserId1",
-                table: "Contacts",
-                column: "UserId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Messages_ConversationId",
