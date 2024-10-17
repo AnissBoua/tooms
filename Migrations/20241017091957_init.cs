@@ -41,16 +41,10 @@ namespace tooms.Migrations
                     Password = table.Column<string>(type: "longtext", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ConversationId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Users_Conversations_ConversationId",
-                        column: x => x.ConversationId,
-                        principalTable: "Conversations",
-                        principalColumn: "Id");
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -169,11 +163,6 @@ namespace tooms.Migrations
                 name: "IX_UserConversations_UserId",
                 table: "UserConversations",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_ConversationId",
-                table: "Users",
-                column: "ConversationId");
         }
 
         /// <inheritdoc />
