@@ -36,16 +36,22 @@ namespace tooms.controllers
             if (HttpContext.WebSockets.IsWebSocketRequest)
             {
                 var socket = await HttpContext.WebSockets.AcceptWebSocketAsync();
-                var connectedCount = _connectedClients.Count();
-                Console.WriteLine("Connected count : " + connectedCount);
 
-                var clientId = await userService.GetOne(connectedCount + 1);
+                Console.WriteLine("Nouvelle connexion WebSocket.");
 
-                if (clientId != null)
+                // Authentifier et gérer la session WebSocket
+                var user = await AuthenticateWebSocket(socket);
+                if (user != null)
                 {
-                    Console.WriteLine($"je suis : {clientId.Nickname}");
-                    _connectedClients.TryAdd(clientId, socket);
-                    await HandleWebSocketCommunication(clientId, socket);
+                    Console.WriteLine($"Utilisateur {user.Nickname} connecté.");
+                    _connectedClients.TryAdd(user, socket);
+                    // Gérer la communication avec cet utilisateur
+                    await HandleWebSocketCommunication(user, socket);
+                }
+                else
+                {
+                    await socket.CloseAsync(WebSocketCloseStatus.PolicyViolation,
+                        "Authentification échouée", CancellationToken.None);
                 }
 
 
@@ -55,6 +61,24 @@ namespace tooms.controllers
             {
                 return BadRequest("WebSocket request expected.");
             }
+        }
+
+        private async Task<User?> AuthenticateWebSocket(WebSocket socket)
+        {
+            var buffer = new byte[1024 * 4];
+            var result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+
+            if (result.MessageType == WebSocketMessageType.Text)
+            {
+                var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
+                if (TryParseJson(message, out var parsedMessage) &&
+                    parsedMessage.TryGetProperty("token", out var tokenElement))
+                {
+                    var token = tokenElement.GetString();
+                    return await userService.GetByToken(token + (_connectedClients.Count +1));  // Récupère l'utilisateur avec le token
+                }
+            }
+            return null;  // Échec d'authentification
         }
 
         private async Task HandleWebSocketCommunication(User clientId, WebSocket socket)
