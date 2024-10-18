@@ -23,6 +23,9 @@ namespace tooms.controllers
             await context.Messages.AddAsync(message);
             await context.SaveChangesAsync();
 
+            var messageText = messageDto.Content;
+            await WebSocketHandler.BroadcastMessage(messageText);
+
             return Ok(message.ToMessageDto());
         }
 

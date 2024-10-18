@@ -6506,19 +6506,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\htran\\.nuget\\packages\\": {}
+    "C:\\Users\\marzo\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\htran\\Documents\\GitHub\\tooms\\tooms.csproj",
+      "projectUniqueName": "D:\\CFA_INSTA\\tooms\\tooms.csproj",
       "projectName": "tooms",
-      "projectPath": "C:\\Users\\htran\\Documents\\GitHub\\tooms\\tooms.csproj",
-      "packagesPath": "C:\\Users\\htran\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\htran\\Documents\\GitHub\\tooms\\obj\\",
+      "projectPath": "D:\\CFA_INSTA\\tooms\\tooms.csproj",
+      "packagesPath": "C:\\Users\\marzo\\.nuget\\packages\\",
+      "outputPath": "D:\\CFA_INSTA\\tooms\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\htran\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\marzo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -6623,12 +6623,6 @@
     }
   },
   "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problème de lecture du fichier cache C:\\Users\\htran\\Documents\\GitHub\\tooms\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    },
     {
       "code": "NU1701",
       "level": "Warning",
