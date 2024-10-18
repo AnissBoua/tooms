@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDBContext>(options => {
-    options.UseMySQL("server=localhost;database=tooms;user=anisse;password=dj68481935");
+    options.UseMySQL("server=localhost;database=tooms;user=root;password=");
 });
 
 //Permet d'ajouter les class de /Services avec les Dependencies injections ;)
@@ -38,6 +38,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddMi
 var app = builder.Build();
 
 app.UseWebSockets();
+
+app.Use(async (context, next) =>
+{
+    if (context.WebSockets.IsWebSocketRequest)
+    {
+        var webSocket = await context.WebSockets.AcceptWebSocketAsync();
+        await WebSocketHandler.Handle(context, webSocket);
+    } else {
+        await next();
+    }
+});
 
 // Use the CORS policy
 app.UseCors("React");
