@@ -38,6 +38,10 @@ namespace tooms.controllers
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] UserCreateDto userDto) {
+            // Check if the user already exists
+            var userExists = context.Users.Any(user => user.Email == userDto.Email);
+            if (userExists) return BadRequest("User already exists");
+            
             var user = userDto.ToUser();
             await context.Users.AddAsync(user);
             await context.SaveChangesAsync();
