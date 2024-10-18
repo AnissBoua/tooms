@@ -75,7 +75,17 @@ namespace tooms.controllers
                     parsedMessage.TryGetProperty("token", out var tokenElement))
                 {
                     var token = tokenElement.GetString();
-                    return await userService.GetByToken(token + (_connectedClients.Count +1));  // Récupère l'utilisateur avec le token
+                    var user = await userService.GetByToken(token + (_connectedClients.Count + 1));
+                    if(user != null)
+                    {
+                        if (user != null)
+                        {
+                            var userIdJson = JsonSerializer.Serialize(new { type = "userId", data = user.Id });
+                            var userIdBytes = Encoding.UTF8.GetBytes(userIdJson);
+                            await socket.SendAsync(userIdBytes, WebSocketMessageType.Text, true, CancellationToken.None);
+                        }
+                    }
+                    return user; // Récupère l'utilisateur avec le token
                 }
             }
             return null;  // Échec d'authentification
