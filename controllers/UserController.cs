@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using tooms.data;
 using tooms.dtos.user;
 using tooms.mappers;
+using tooms.Services;
 
 namespace tooms.controllers
 {
@@ -15,9 +16,11 @@ namespace tooms.controllers
     public class UserController : ControllerBase
     {
         private readonly ApplicationDBContext context;
-        public UserController(ApplicationDBContext DBcontext)
+        private UserService userService;
+        public UserController(ApplicationDBContext DBcontext, UserService userService)
         {
             context = DBcontext;
+            this.userService = userService;
         }
 
         [HttpGet]
@@ -30,7 +33,7 @@ namespace tooms.controllers
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOne(int id) {
-            var user = await context.Users.FindAsync(id);
+            var user = await userService.GetOne(id);
             if (user == null) return NotFound();
 
             return Ok(user.ToUserDto());

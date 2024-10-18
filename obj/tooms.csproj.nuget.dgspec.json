@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\aniss\\Documents\\Projects\\cfa\\tooms\\tooms.csproj": {}
+    "C:\\Users\\htran\\Documents\\GitHub\\tooms\\tooms.csproj": {}
   },
   "projects": {
-    "C:\\Users\\aniss\\Documents\\Projects\\cfa\\tooms\\tooms.csproj": {
+    "C:\\Users\\htran\\Documents\\GitHub\\tooms\\tooms.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\aniss\\Documents\\Projects\\cfa\\tooms\\tooms.csproj",
+        "projectUniqueName": "C:\\Users\\htran\\Documents\\GitHub\\tooms\\tooms.csproj",
         "projectName": "tooms",
-        "projectPath": "C:\\Users\\aniss\\Documents\\Projects\\cfa\\tooms\\tooms.csproj",
-        "packagesPath": "C:\\Users\\aniss\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\aniss\\Documents\\Projects\\cfa\\tooms\\obj\\",
+        "projectPath": "C:\\Users\\htran\\Documents\\GitHub\\tooms\\tooms.csproj",
+        "packagesPath": "C:\\Users\\htran\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\htran\\Documents\\GitHub\\tooms\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\aniss\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\htran\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -69,6 +69,10 @@
             "MySql.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.5, )"
+            },
+            "Scrutor": {
+              "target": "Package",
+              "version": "[5.0.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

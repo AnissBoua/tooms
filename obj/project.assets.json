@@ -608,7 +608,7 @@
       "Microsoft.Extensions.DependencyModel/8.0.2": {
         "type": "package",
         "compile": {
-          "lib/net8.0/_._": {
+          "lib/net8.0/Microsoft.Extensions.DependencyModel.dll": {
             "related": ".xml"
           }
         },
@@ -884,6 +884,23 @@
           "runtimes/win-x86/native/sni.dll": {
             "assetType": "native",
             "rid": "win-x86"
+          }
+        }
+      },
+      "Scrutor/5.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
+          "Microsoft.Extensions.DependencyModel": "8.0.1"
+        },
+        "compile": {
+          "lib/net8.0/Scrutor.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Scrutor.dll": {
+            "related": ".pdb;.xml"
           }
         }
       },
@@ -3207,6 +3224,27 @@
         "version.txt"
       ]
     },
+    "Scrutor/5.0.1": {
+      "sha512": "lODLSduex32544jZZom2bN73mg4DfyGCNdywismPv2D2Hslv4jaq1Y+apV24xTW65tDMXskZHwVFSg2xIs3jtQ==",
+      "type": "package",
+      "path": "scrutor/5.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net462/Scrutor.dll",
+        "lib/net462/Scrutor.pdb",
+        "lib/net462/Scrutor.xml",
+        "lib/net8.0/Scrutor.dll",
+        "lib/net8.0/Scrutor.pdb",
+        "lib/net8.0/Scrutor.xml",
+        "lib/netstandard2.0/Scrutor.dll",
+        "lib/netstandard2.0/Scrutor.pdb",
+        "lib/netstandard2.0/Scrutor.xml",
+        "scrutor.5.0.1.nupkg.sha512",
+        "scrutor.nuspec"
+      ]
+    },
     "Swashbuckle.AspNetCore/6.6.2": {
       "sha512": "+NB4UYVYN6AhDSjW0IJAd1AGD8V33gemFNLPaxKTtPkHB+HaKAKf9MGAEUPivEWvqeQfcKIw8lJaHq6LHljRuw==",
       "type": "package",
@@ -4776,23 +4814,24 @@
       "Microsoft.EntityFrameworkCore.Tools >= 8.0.10",
       "MySql.Data.EntityFramework >= 9.1.0",
       "MySql.EntityFrameworkCore >= 8.0.5",
+      "Scrutor >= 5.0.1",
       "Swashbuckle.AspNetCore >= 6.6.2"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\aniss\\.nuget\\packages\\": {}
+    "C:\\Users\\htran\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\aniss\\Documents\\Projects\\cfa\\tooms\\tooms.csproj",
+      "projectUniqueName": "C:\\Users\\htran\\Documents\\GitHub\\tooms\\tooms.csproj",
       "projectName": "tooms",
-      "projectPath": "C:\\Users\\aniss\\Documents\\Projects\\cfa\\tooms\\tooms.csproj",
-      "packagesPath": "C:\\Users\\aniss\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\aniss\\Documents\\Projects\\cfa\\tooms\\obj\\",
+      "projectPath": "C:\\Users\\htran\\Documents\\GitHub\\tooms\\tooms.csproj",
+      "packagesPath": "C:\\Users\\htran\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\htran\\Documents\\GitHub\\tooms\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\aniss\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\htran\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4848,6 +4887,10 @@
             "target": "Package",
             "version": "[8.0.5, )"
           },
+          "Scrutor": {
+            "target": "Package",
+            "version": "[5.0.1, )"
+          },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[6.6.2, )"
@@ -4881,7 +4924,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'MySql.Data.EntityFramework 9.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
+      "message": "Le package 'MySql.Data.EntityFramework 9.1.0' a été restauré en utilisant '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' au lieu du framework cible du projet 'net8.0'. Ce package n'est peut-être pas totalement compatible avec votre projet.",
       "libraryId": "MySql.Data.EntityFramework",
       "targetGraphs": [
         "net8.0"

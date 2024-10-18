@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using tooms.data;
+using tooms.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,10 +9,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDBContext>(options => {
-    options.UseMySQL("server=localhost;database=tooms;user=anisse;password=dj68481935");
+    options.UseMySQL("server=localhost;database=tooms;user=root;password=root");
 });
+
+//Permet d'ajouter les class de /Services avec les Dependencies injections ;)
+builder.Services.Scan(scan => scan
+    .FromAssemblyOf<UserService>()
+    .AddClasses(classes => classes.InNamespaceOf<UserService>())
+    .AsSelfWithInterfaces()
+    .WithScopedLifetime());
+
 builder.Services.AddControllers();
 var app = builder.Build();
+
+app.UseWebSockets();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
