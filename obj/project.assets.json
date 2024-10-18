@@ -6506,19 +6506,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\htran\\.nuget\\packages\\": {}
+    "C:\\Users\\aniss\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\htran\\Documents\\GitHub\\tooms\\tooms.csproj",
+      "projectUniqueName": "C:\\Users\\aniss\\Documents\\Projects\\cfa\\tooms\\tooms.csproj",
       "projectName": "tooms",
-      "projectPath": "C:\\Users\\htran\\Documents\\GitHub\\tooms\\tooms.csproj",
-      "packagesPath": "C:\\Users\\htran\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\htran\\Documents\\GitHub\\tooms\\obj\\",
+      "projectPath": "C:\\Users\\aniss\\Documents\\Projects\\cfa\\tooms\\tooms.csproj",
+      "packagesPath": "C:\\Users\\aniss\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\aniss\\Documents\\Projects\\cfa\\tooms\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\htran\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\aniss\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -6624,16 +6624,10 @@
   },
   "logs": [
     {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problème de lecture du fichier cache C:\\Users\\htran\\Documents\\GitHub\\tooms\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    },
-    {
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Le package 'MySql.Data.EntityFramework 9.1.0' a été restauré en utilisant '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' au lieu du framework cible du projet 'net8.0'. Ce package n'est peut-être pas totalement compatible avec votre projet.",
+      "message": "Package 'MySql.Data.EntityFramework 9.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
       "libraryId": "MySql.Data.EntityFramework",
       "targetGraphs": [
         "net8.0"

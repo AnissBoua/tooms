@@ -37,11 +37,16 @@ namespace tooms.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UserId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FriendId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Contacts");
                 });
@@ -107,11 +112,11 @@ namespace tooms.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Nickname")
+                    b.Property<string>("Identifier")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("Nickname")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -158,6 +163,9 @@ namespace tooms.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("tooms.models.User", null)
+                        .WithMany("Contacts")
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("Friend");
 
@@ -183,17 +191,10 @@ namespace tooms.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("tooms.models.User", b =>
-                {
-                    b.HasOne("tooms.models.Conversation", null)
-                        .WithMany("Users")
-                        .HasForeignKey("ConversationId");
-                });
-
             modelBuilder.Entity("tooms.models.UserConversation", b =>
                 {
                     b.HasOne("tooms.models.Conversation", "Conversation")
-                        .WithMany()
+                        .WithMany("UserConversations")
                         .HasForeignKey("ConversationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -213,7 +214,7 @@ namespace tooms.Migrations
                 {
                     b.Navigation("Messages");
 
-                    b.Navigation("Users");
+                    b.Navigation("UserConversations");
                 });
 
             modelBuilder.Entity("tooms.models.User", b =>

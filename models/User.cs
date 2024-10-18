@@ -11,7 +11,7 @@ namespace tooms.models
         public int Id { get; set; }
         public string Nickname { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
+        public string Identifier { get; set; } = string.Empty;
         public List<Contact> Contacts { get; set; } = new List<Contact>();
         [NotMapped]
         public List<UserConversation> UserConversations { get; set; } = new List<UserConversation>();

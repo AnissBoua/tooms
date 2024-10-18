@@ -11,7 +11,7 @@ using tooms.data;
 namespace tooms.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20241017091957_init")]
+    [Migration("20241018154819_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -108,9 +108,6 @@ namespace tooms.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("ConversationId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
@@ -118,11 +115,11 @@ namespace tooms.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Nickname")
+                    b.Property<string>("Identifier")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("Nickname")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -130,8 +127,6 @@ namespace tooms.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ConversationId");
 
                     b.ToTable("Users");
                 });
@@ -199,17 +194,10 @@ namespace tooms.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("tooms.models.User", b =>
-                {
-                    b.HasOne("tooms.models.Conversation", null)
-                        .WithMany("Users")
-                        .HasForeignKey("ConversationId");
-                });
-
             modelBuilder.Entity("tooms.models.UserConversation", b =>
                 {
                     b.HasOne("tooms.models.Conversation", "Conversation")
-                        .WithMany()
+                        .WithMany("UserConversations")
                         .HasForeignKey("ConversationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -229,7 +217,7 @@ namespace tooms.Migrations
                 {
                     b.Navigation("Messages");
 
-                    b.Navigation("Users");
+                    b.Navigation("UserConversations");
                 });
 
             modelBuilder.Entity("tooms.models.User", b =>

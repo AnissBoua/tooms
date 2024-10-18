@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\htran\\Documents\\GitHub\\tooms\\tooms.csproj": {}
+    "C:\\Users\\aniss\\Documents\\Projects\\cfa\\tooms\\tooms.csproj": {}
   },
   "projects": {
-    "C:\\Users\\htran\\Documents\\GitHub\\tooms\\tooms.csproj": {
+    "C:\\Users\\aniss\\Documents\\Projects\\cfa\\tooms\\tooms.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\htran\\Documents\\GitHub\\tooms\\tooms.csproj",
+        "projectUniqueName": "C:\\Users\\aniss\\Documents\\Projects\\cfa\\tooms\\tooms.csproj",
         "projectName": "tooms",
-        "projectPath": "C:\\Users\\htran\\Documents\\GitHub\\tooms\\tooms.csproj",
-        "packagesPath": "C:\\Users\\htran\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\htran\\Documents\\GitHub\\tooms\\obj\\",
+        "projectPath": "C:\\Users\\aniss\\Documents\\Projects\\cfa\\tooms\\tooms.csproj",
+        "packagesPath": "C:\\Users\\aniss\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\aniss\\Documents\\Projects\\cfa\\tooms\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\htran\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\aniss\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

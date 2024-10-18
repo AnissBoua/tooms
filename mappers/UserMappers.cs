@@ -23,6 +23,7 @@ namespace tooms.mappers
             return new User {
                 Nickname = request.Nickname,
                 Email = request.Email,
+                Identifier = request.Identifier
             };
         }
 
