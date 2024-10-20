@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using tooms.data;
 using tooms.dtos.user;
 using tooms.mappers;
+using tooms.models;
 using tooms.Services;
 
 namespace tooms.controllers
@@ -40,12 +43,27 @@ namespace tooms.controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create([FromBody] UserCreateDto userDto) {
             // Check if the user already exists
-            var userExists = context.Users.Any(user => user.Email == userDto.Email);
-            if (userExists) return BadRequest("User already exists");
+            var user = context.Users.Where(user => user.Email == userDto.Email).FirstOrDefault();
+            if (user != null) {
+                // Check if the Identifier is the same
+                var userIdentifier = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (userIdentifier == null) return Unauthorized("User ID not found");
+                Console.WriteLine(userIdentifier);
+
+                if (user.Identifier != userIdentifier) {
+                    // Update the user's Identifier
+                    user.Identifier = userIdentifier;
+                    await context.SaveChangesAsync();
+                    return Ok(user.ToUserDto());
+                }
+
+                return Ok(user.ToUserDto());
+            }
             
-            var user = userDto.ToUser();
+            user = userDto.ToUser();
             await context.Users.AddAsync(user);
             await context.SaveChangesAsync();
 
