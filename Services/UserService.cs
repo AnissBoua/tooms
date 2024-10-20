@@ -18,20 +18,11 @@ namespace tooms.Services
             return user;
         }
 
-        public async Task<User?> GetByToken(string token)
-        {
-            if (token == null) return null;
-            if (token == "HelloMotoToken1")
-            {
-                return await context.Users.FindAsync(1);
-            } else if (token == "HelloMotoToken2")
-            {
-                return await context.Users.FindAsync(2);
-            } else if (token == "HelloMotoToken3")
-            {
-                return await context.Users.FindAsync(3);
-            }
-            return null;
+        public async Task<User?> GetByToken(string identifier) {
+            if (identifier == null) return null;
+
+            var user = await context.Users.Where(user => user.Identifier == identifier).FirstOrDefaultAsync();
+            return user;
         }
     }
 }

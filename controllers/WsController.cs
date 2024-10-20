@@ -74,8 +74,8 @@ namespace tooms.controllers
                 if (TryParseJson(message, out var parsedMessage) &&
                     parsedMessage.TryGetProperty("token", out var tokenElement))
                 {
-                    var token = tokenElement.GetString();
-                    var user = await userService.GetByToken(token + (_connectedClients.Count + 1));
+                    var identifier = tokenElement.GetString();
+                    var user = await userService.GetByToken(identifier);
                     if(user != null)
                     {
                         if (user != null)
@@ -116,7 +116,8 @@ namespace tooms.controllers
                                 parsedMessage.TryGetProperty("conversation", out JsonElement conversationId);
                                 var conversionId = conversationId.GetInt16();
                                 Console.WriteLine($"conversation number {conversationId}");
-                                    switch (messageType)
+                                Console.WriteLine("Messgae type: " + messageType);
+                                switch (messageType)
                                 {
                                     case "message":
                                         jsonData.TryGetProperty("sender", out JsonElement sender);
@@ -161,6 +162,11 @@ namespace tooms.controllers
             var users = conversationDto.Users;
             var userIds = users.Select(user => user.Id).ToArray();
             string jsonString = message.GetRawText();
+            Dictionary<string, object>? messageData = jsonString != null ? JsonSerializer.Deserialize<Dictionary<string, object>>(jsonString) : null;
+            if (messageData == null) return;
+            messageData["caller"] = clientId.ToUserDto();
+            jsonString = JsonSerializer.Serialize(messageData);
+
             foreach (var client in _connectedClients)
             {
                 if (client.Key.Id != clientId.Id && userIds.Contains(client.Key.Id) && client.Value.State == WebSocketState.Open)
