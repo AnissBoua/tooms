@@ -9,10 +9,7 @@ namespace tooms.data
 {
     public class ApplicationDBContext : DbContext
     {
-        public ApplicationDBContext(DbContextOptions options) : base(options)
-        {
-            
-        }
+        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options) {}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

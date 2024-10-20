@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using tooms.dtos.message;
 using tooms.dtos.user;
 using tooms.mappers;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace tooms.controllers
 {
@@ -21,9 +23,20 @@ namespace tooms.controllers
 
         // TODO: Return only the conversations where the user is present
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAll() {
-            var conversations = await context.Conversations.ToListAsync();
-            return Ok(conversations);
+            // Get the user's ID from the claims
+            var userIdentifier = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userIdentifier == null) return Unauthorized("User ID not found");
+
+            // Get the conversations where the user is present
+            var conversations = await context.UserConversations
+                .Where(uc => uc.User.Identifier == userIdentifier)
+                .Select(uc => uc.Conversation)
+                .ToListAsync();
+            var conversationsDto = conversations.Select(conversation => conversation.ToConversationDto(context));
+
+            return Ok(conversationsDto);
         }
 
         [HttpGet("{id}")]

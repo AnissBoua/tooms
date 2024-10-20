@@ -1,8 +1,13 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Web;
 using tooms.data;
 using tooms.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -19,9 +24,7 @@ builder.Services.Scan(scan => scan
     .AsSelfWithInterfaces()
     .WithScopedLifetime());
 
-builder.Services.AddControllers();
-builder.Services.AddCors(options =>
-{
+builder.Services.AddCors(options => {
     options.AddPolicy("React",
         builder => {
             builder.WithOrigins("http://localhost:3000") // React app URL during development
@@ -30,6 +33,9 @@ builder.Services.AddCors(options =>
                    .AllowCredentials(); // If you need to allow cookies, JWT, etc.
         });
 });
+
+builder.Services.AddControllers();
+
 var app = builder.Build();
 
 app.UseWebSockets();
@@ -45,5 +51,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Enable authentication and authorization middleware
+app.UseAuthentication();
 app.MapControllers();
+app.UseAuthorization();
 app.Run();
