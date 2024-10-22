@@ -14,7 +14,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddMi
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDBContext>(options => {
-    options.UseMySQL("server=localhost;database=tooms;user=root;password=root");
+    options.UseMySQL("server=localhost;database=tooms;user=root;password=");
 });
 
 //Permet d'ajouter les class de /Services avec les Dependencies injections ;)
