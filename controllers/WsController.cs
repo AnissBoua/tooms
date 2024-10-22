@@ -4,6 +4,7 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
 using tooms.data;
+using tooms.dtos.message;
 using tooms.dtos.user;
 using tooms.mappers;
 using tooms.models;
@@ -21,12 +22,14 @@ namespace tooms.controllers
         private static readonly ConcurrentDictionary<User, WebSocket> _connectedClients = new();
         private UserService userService;
         private ConversationService conversationService;
+        private readonly MessageService messageService;
         private readonly ApplicationDBContext context;
 
-        public WsController(UserService userService, ConversationService conversationService, ApplicationDBContext DBcontext)
+        public WsController(UserService userService, ConversationService conversationService, MessageService messageService, ApplicationDBContext DBcontext)
         {
             this.userService = userService;
             this.conversationService = conversationService;
+            this.messageService = new MessageService(DBcontext);
             this.context = DBcontext;
         }
 
@@ -94,6 +97,7 @@ namespace tooms.controllers
         private async Task HandleWebSocketCommunication(User clientId, WebSocket socket)
         {
             var buffer = new byte[1024 * 16];
+          //  var messageService = new MessageService(context);
 
             try
             {
@@ -121,8 +125,21 @@ namespace tooms.controllers
                                 {
                                     case "message":
                                         jsonData.TryGetProperty("sender", out JsonElement sender);
-                                        jsonData.TryGetProperty("message", out JsonElement msg);
-                                        Console.WriteLine(sender.GetInt16() + " : " + msg.GetString());
+                                        jsonData.TryGetProperty("content", out JsonElement msg);
+
+                                        var messageDto = new MessageCreateDto
+                                        {
+                                            UserId = sender.GetInt32(),
+                                            ConversationId = conversationId.GetInt32(),
+                                            Content = msg.GetString()
+                                        };
+
+                                       // var messageService2 = new MessageService(context);
+                                        var message2 = await messageService.CreateMessageAsync(messageDto);
+
+                                        Console.WriteLine(message2.Content);
+
+                                        Console.WriteLine("__________________________________________________________" + sender.GetInt16() + " : " + msg.GetString());
                                         break;
                                     case "call":
                                         await CallConversation(parsedMessage, clientId, conversionId);
