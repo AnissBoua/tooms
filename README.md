@@ -8,7 +8,7 @@
 #### Setup
 Cloner le dépôt:
 ``` bash
-git clone https://github.com/your-repo/tooms.git
+git clone https://github.com/AnissBoua/tooms.git
 ```
 
 Naviguer vers le répertoire du projet:
