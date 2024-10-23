@@ -40,7 +40,32 @@ namespace tooms.controllers
             await context.Contacts.AddAsync(contact);
             await context.SaveChangesAsync();
 
-            return Ok(contact.ToContactDto(context));
+            var conversation = new Conversation {
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            };
+
+            // Add the conversation to the context
+            await context.Conversations.AddAsync(conversation);
+            // Save changes
+            await context.SaveChangesAsync();
+
+            var userConversation = new UserConversation{
+                User = user, // Set the user entity directly
+                Conversation = conversation // Set the conversation reference
+            };
+
+            // Add to the UserConversations collection
+            context.UserConversations.Add(userConversation);
+
+            userConversation = new UserConversation{
+                User = friend, // Set the user entity directly
+                Conversation = conversation // Set the conversation reference
+            };
+            context.UserConversations.Add(userConversation);
+            await context.SaveChangesAsync();
+
+            return Ok(conversation.ToConversationDto(context));
         }
 
         [HttpDelete]
