@@ -60,10 +60,8 @@ namespace tooms.controllers
                         await context.SaveChangesAsync();
                         return Ok(user.ToUserDto());
                     }
-
-                    return Ok(user.ToUserDto());
                 }
-                return Conflict("User with this email already exists. Please log in to update your information.");
+                return Ok(user.ToUserDto());
             }
             
             user = userDto.ToUser();
