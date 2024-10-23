@@ -43,24 +43,27 @@ namespace tooms.controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> Create([FromBody] UserCreateDto userDto) {
             // Check if the user already exists
             var user = context.Users.Where(user => user.Email == userDto.Email).FirstOrDefault();
             if (user != null) {
                 // Check if the Identifier is the same
-                var userIdentifier = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                if (userIdentifier == null) return Unauthorized("User ID not found");
-                Console.WriteLine(userIdentifier);
+                if (User.Identity.IsAuthenticated) {
+                    var userIdentifier = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    if (userIdentifier == null) return Unauthorized("User ID not found");
+                    Console.WriteLine(userIdentifier);
 
-                if (user.Identifier != userIdentifier) {
-                    // Update the user's Identifier
-                    user.Identifier = userIdentifier;
-                    await context.SaveChangesAsync();
+                    if (user.Identifier != userIdentifier) {
+                        // Update the user's Identifier
+                        user.Identifier = userIdentifier;
+                        await context.SaveChangesAsync();
+                        return Ok(user.ToUserDto());
+                    }
+
                     return Ok(user.ToUserDto());
                 }
-
-                return Ok(user.ToUserDto());
+                return Conflict("User with this email already exists. Please log in to update your information.");
             }
             
             user = userDto.ToUser();
