@@ -2,6 +2,9 @@
 - .NET 8 SDK
 - MySQL
 
+> [!WARNING]  
+> The project need to be run on HTTPS for the WebSockets to work properly to do so please run the project on Visual Studio, they provide an execution on HTTPS
+
 #### Setup
 Clone the repository:
 ``` bash
@@ -52,6 +55,3 @@ dotnet run
 ```
 
 Navigate to [https://localhost:7164/swagger/index.html](https://localhost:7164/swagger/index.html) (or another specified port) in your browser to access the backend.
-
-> [!WARNING]  
-> The project need to be run on HTTPS for the WebSockets to work properly to do so please run the project on Visual Studio, they provide an execution on HTTPS
