@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MySqlX.XDevAPI;
 using System.Collections.Concurrent;
 using System.Net.WebSockets;
 using System.Text;
@@ -127,17 +128,25 @@ namespace tooms.controllers
                                         jsonData.TryGetProperty("sender", out JsonElement sender);
                                         jsonData.TryGetProperty("content", out JsonElement msg);
 
-                                        var messageDto = new MessageCreateDto
+                                        Console.WriteLine(sender.GetInt32() + " " + msg.GetString());
+                                        var userInstance = context.Users.Find(sender.GetInt32());
+                                        var conversationInstance = context.Conversations.Find(conversationId.GetInt32());
+
+                                        var messageInstance = new Message
                                         {
-                                            UserId = sender.GetInt32(),
-                                            ConversationId = conversationId.GetInt32(),
-                                            Content = msg.GetString()
+                                            User = userInstance,
+                                            Conversation = conversationInstance,
+                                            Content = msg.GetString(),
+                                            CreatedAt = DateTime.UtcNow,
+                                            UpdatedAt = DateTime.UtcNow
                                         };
 
-                                       // var messageService2 = new MessageService(context);
-                                        var message2 = await messageService.CreateMessageAsync(messageDto);
+                                        await BroadcastMessageToConversation(conversationInstance, parsedMessage, messageInstance);
 
-                                        Console.WriteLine(message2.Content);
+                                        await context.Messages.AddAsync(messageInstance);
+                                        await context.SaveChangesAsync();
+
+                                        Console.WriteLine(messageInstance.Content);
 
                                         Console.WriteLine("__________________________________________________________" + sender.GetInt16() + " : " + msg.GetString());
                                         break;
@@ -169,6 +178,46 @@ namespace tooms.controllers
                 _connectedClients.TryRemove(clientId, out _);
                 socket.Dispose();
             }
+        }
+
+        private async Task BroadcastMessageToConversation(Conversation conversation, JsonElement message, Message messageInstance)
+        {
+            if (conversation == null) return;
+
+            var dto = messageInstance.ToMessageSocket();
+            Console.WriteLine(messageInstance.Conversation.ToString() + " " + messageInstance.User.ToString());
+            // Convertir messageInstance en JSON string
+            var messageInstanceJson = JsonSerializer.Serialize(dto);
+
+            // Convertir JsonElement en JsonObject pour être modifiable
+            var jsonDocument = JsonDocument.Parse(message.GetRawText());
+            var jsonObject = jsonDocument.RootElement.Clone().Deserialize<Dictionary<string, JsonElement>>();
+
+            // Remplacer la valeur de la clé "data" avec le messageInstance
+            if (jsonObject.ContainsKey("data"))
+            {
+                jsonObject["data"] = JsonDocument.Parse(messageInstanceJson).RootElement;
+            }
+
+            // Recréer la chaîne JSON modifiée
+            var modifiedJsonString = JsonSerializer.Serialize(jsonObject);
+            var conversationDto = conversation.ToConversationDto(this.context);
+            var users = conversationDto.Users;
+            var userIds = users.Select(user => user.Id).ToArray();
+
+            foreach (var client in _connectedClients)
+            {
+                if (userIds.Contains(client.Key.Id) && client.Value.State == WebSocketState.Open)
+                {
+                    await client.Value.SendAsync(
+                        Encoding.UTF8.GetBytes(modifiedJsonString),
+                        WebSocketMessageType.Text,
+                        true,
+                        CancellationToken.None
+                    );
+                }
+            }
+
         }
 
         private async Task CallConversation(JsonElement message, User clientId, int conversationId)
