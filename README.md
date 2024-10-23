@@ -1,34 +1,34 @@
-#### Prerequisites
+#### Prérequis
 - .NET 8 SDK
 - MySQL
 
 > [!WARNING]  
-> The project need to be run on HTTPS for the WebSockets to work properly to do so please run the project on Visual Studio, they provide an execution on HTTPS
+> Le projet doit être exécuté en HTTPS pour que les WebSockets fonctionnent correctement. Pour ce faire, veuillez exécuter le projet sur Visual Studio, qui permet une exécution en HTTPS.
 
 #### Setup
-Clone the repository:
+Cloner le dépôt:
 ``` bash
 git clone https://github.com/your-repo/tooms.git
 ```
 
-Navigate to the project directory:
+Naviguer vers le répertoire du projet:
 ```bash
 cd tooms
 ```
 
-Update the database connection string in `Program.cs`:
+Mettre à jour la chaîne de connexion à la base de données dans `Program.cs`:
 ```cs
 server=localhost;database=tooms;user=<user>;password=<password>;
 ```
 
 #### Migrations: 
-This command applies pending migrations to update your database schema.
+Cette commande applique les migrations en attente pour mettre à jour votre schéma de base de données.
 ``` bash
 dotnet ef database update
 ```
 
-#### CORS Configuration 
-Ensure that the frontend's URL is properly configured to communicate with the backend. In `Program.cs`, add or modify the CORS policy as follows: 
+#### Configuration CORS
+Assurez-vous que l'URL du frontend est correctement configurée pour communiquer avec le backend. Dans `Program.cs`, ajoutez ou modifiez la politique CORS comme suit: 
 ``` cs
 builder.Services.AddCors(options => {
     options.AddPolicy("React",
@@ -40,18 +40,18 @@ builder.Services.AddCors(options => {
         });
 });
 ```
-Update the `WithOrigins` value based on the URL of your frontend.
+Mettez à jour la valeur de `WithOrigins` en fonction de l'URL de votre frontend.
 
-## Authentication 
-This project uses Microsoft authentication. Only two URLs are allowed for security reasons: 
+## Authentification
+Ce projet utilise l'authentification Microsoft. Seules deux URL sont autorisées pour des raisons de sécurité :
 - http://localhost:3000 
 - https://tooms.anisse-bouainbi.fr/ 
-If you need to use another URL, please contact the IT Service Administrator responsible for Azure.
+Si vous avez besoin d'utiliser une autre URL, veuillez contacter l'administrateur des services informatiques responsable d'Azure.
 
-## Running the Application  
-To run the application locally:  
+## Exécution de l'application
+Pour exécuter l'application localement:  
 ``` bash 
 dotnet run
 ```
 
-Navigate to [https://localhost:7164/swagger/index.html](https://localhost:7164/swagger/index.html) (or another specified port) in your browser to access the backend.
+Accédez à [https://localhost:7164/swagger/index.html](https://localhost:7164/swagger/index.html) (ou un autre port spécifié) dans votre navigateur pour accéder au backend.
