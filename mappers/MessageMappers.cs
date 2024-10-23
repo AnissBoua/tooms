@@ -24,6 +24,17 @@ namespace tooms.mappers
                 Content = request.Content,
             };
         }
+        public static Message ToMessageSocket(this Message request)
+        {
+            return new Message
+            {
+                Id = request.Id,
+                CreatedAt = request.CreatedAt,
+                UpdatedAt = request.UpdatedAt,
+                Content = request.Content,
+                User = request.User
+            };
+        }
 
         public static MessageConversationDto ToMessageConversationDto(this Message message) {
             return new MessageConversationDto {

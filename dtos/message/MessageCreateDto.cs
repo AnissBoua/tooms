@@ -8,6 +8,8 @@ namespace tooms.dtos.message
     public class MessageCreateDto
     {
         public int UserId { get; set; } = 0;
+
+        public int ConversationId { get; set; }
         public string Content { get; set; } = string.Empty;
     }
 }
