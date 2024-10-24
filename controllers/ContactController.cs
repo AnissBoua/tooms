@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using tooms.data;
 using tooms.dtos.contact;
@@ -21,13 +23,19 @@ namespace tooms.controllers
         }
         
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> AddContact([FromBody] ContactAddDto contactDto) {
             // Find the user by email
             var friend = context.Users.FirstOrDefault(user => user.Email == contactDto.Email);
             if (friend == null) return NotFound("User not found");
 
-            var user = context.Users.Find(1);
-            if (user == null) return NotFound("User not found");
+            var user = new User();
+            if (User.Identity.IsAuthenticated) {
+                var userIdentifier = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (userIdentifier == null) return Unauthorized("User ID not found");
+                user = context.Users.FirstOrDefault(user => user.Identifier == userIdentifier);
+            }
+            if (user == null) return Unauthorized("User not found");
 
             // Add the user to the contacts
             var contact = new Contact {
